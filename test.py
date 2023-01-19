@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template, url_for, send_from_directory, redirect
-from werkzeug.utils import secure_filename
+from flask import Flask, request, render_template, url_for, send_from_directory
 import os
 from PIL import Image
 from dither import floyd_steinberg_dither
@@ -12,29 +11,11 @@ if not os.path.exists('static/upload'): os.mkdir('static/upload')
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
     return render_template('upload.html')
-
-
-# @app.route('/upload', methods=['POST'])
-# def upload():
-#     uploaded_files = request.files.getlist("file[]")
-#     if not any(f for f in uploaded_files):
-#         return redirect(url_for('index'))
-#     file_details = []
-#     for file in uploaded_files:
-#         if file and allowed_file(file.filename):
-#             filename = secure_filename(file.filename)
-#             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-#             file.save(filepath)
-#             file_details.append([filename, text])
-
-#     return render_template('display.html', files=file_details)
 
 @app.route('/upload', methods=['POST'])
 def upload_image():

@@ -35,12 +35,18 @@ async function handleFormSubmit(e) {
         });
         var file = await f.blob()
         console.log(file)
+        var filename = images[i].substring(images[i].lastIndexOf('/') + 1)
+        var display_name = filename
+        if (display_name.length > 20) display_name = display_name.substring(0, 20) + '...'
         procDiv.innerHTML += `<li class="list-group-item d-flex align-items-center">
 								<img class="img-reponsive img-rounded preview-image" src=${URL.createObjectURL(file)} />
-								${images[i].substring(images[i].lastIndexOf('/')+1)}
+								${display_name}
+                                <a class="close" href=${URL.createObjectURL(file)} download=${filename}>
+								    <i class="fas fa-download close"></i>
+                                </a>
 							<li/>`
     }
-    
+
 }
 
 async function displayLoading() {

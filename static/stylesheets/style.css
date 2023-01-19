@@ -1,37 +1,39 @@
 [type="file"] {
-    height: 0;
-    overflow: hidden;
-    width: 0;
+  height: 0;
+  overflow: hidden;
+  width: 0;
 }
-  
-[type="file"] + label {
-background: #f15d22;
-border: none;
-border-radius: 5px;
-color: #fff;
-cursor: pointer;
-display: inline-block;
-    font-family: 'Rubik', sans-serif;
-    font-size: inherit;
-font-weight: 500;
-margin-bottom: 1rem;
-outline: none;
-padding: 1rem 50px;
-position: relative;
-transition: all 0.3s;
-vertical-align: middle;
+
+[type="file"]+label {
+  background: #f15d22;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Rubik', sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
 }
 
 .close {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    padding: 12px 16px;
-    transform: translate(0%, -50%);
-  }
-  
-  .close:hover {background: #bbb;}
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  padding: 12px 16px;
+  transform: translate(0%, -50%);
+}
+
+.close:hover {
+  background: #bbb;
+}
 
 ul {
   list-style-type: none;
@@ -39,33 +41,43 @@ ul {
   margin: 0;
 }
 
-.preview-image{
+.preview-image {
   width: auto;
   height: 20pc;
 }
 
 #loading {
-  width: 2rem;
-  height: 2rem;
-  border: 5px solid #f3f3f3;
-  border-top: 6px solid #9c41f2;
+  width: 40rem;
+  height: 40rem;
+  border: 20px solid #f3f3f3;
+  border-top: 20px solid #9c41f2;
   border-radius: 100%;
   margin: auto;
   visibility: hidden;
+  display: none;
+  top: 50%;  
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  position: absolute;
+}
+
+#loading.display {
+  display: block;
+  visibility: visible;
   animation: spin 1s infinite linear;
 }
-#loading.display {
-  visibility: visible;
-}
+
 @keyframes spin {
   from {
-      transform: rotate(0deg);
+    transform:translate(-50%, -50%) rotate(0deg) ;
   }
+
   to {
-      transform: rotate(360deg);
+    transform:translate(-50%, -50%) rotate(360deg) ;
   }
 }
 
-.btn-upload{
+.btn-upload {
   margin: 10px;
 }

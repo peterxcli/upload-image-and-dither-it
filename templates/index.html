@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
     <title>Floyd-Steinberg Dithering Online</title>
 </head>
 
@@ -19,10 +20,11 @@
         </div>
         {% endif %}
     </header>
-
+    
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-
+        <div id="loading"></div>
         <main role="main" class="inner cover">
+            
 
             <h1 class="cover-heading">Floyd-Steinberg Dithering Online</h1>
             <p class="lead">
@@ -36,16 +38,18 @@
                 </div>
 
                 <input type="submit" class="btn btn-lg btn-secondary btn-upload" value="UPLOAD" style="margin-top: 24px">
-                <div id="loading"></div>
+                
             </form>
 
             </p>
 
-        </main>
-    </div>
+            <p class="lead">
+                <div class="container col-md-4">
+                    <ul class="list-group" id="processedfiles"></ul>
+                </div>
+            </p>
 
-    <div class="container col-md-4">
-        <ul class="list-group" id="processedfiles"></ul>
+        </main>
     </div>
 
 </body>
