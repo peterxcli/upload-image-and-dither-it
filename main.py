@@ -20,7 +20,7 @@ def upload_image():
                 image = Image.open(file)
                 dithered_image = floyd_steinberg_dither(image)
             file_name, file_ext = os.path.splitext(file.filename)
-            dithered_image.save(os.path.join('static', 'dithered_' + file_name + ".bmp"), format="bmp")
+            dithered_image.save(os.path.join('static/upload', 'dithered_' + file_name + ".bmp"), format="bmp")
             image_urls.append(url_for('image_file', filename='dithered_' + file_name + ".bmp"))
         print(image_urls)
         return render_template('show_image.html', image_urls=image_urls)
@@ -28,9 +28,9 @@ def upload_image():
         print("fuck")
         return render_template('upload_image.html')
 
-@app.route('/static/<path:filename>')
+@app.route('/static/upload/<path:filename>')
 def image_file(filename):
-    return send_from_directory('static', filename)
+    return send_from_directory('static/upload', filename)
 
 if __name__ == '__main__':
     app.run()
