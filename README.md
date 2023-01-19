@@ -10,4 +10,4 @@
 ### run with docker
 `docker compose up`
 
-## open `localhost:5000`
+## open [`localhost:5000`](http://localhost:5000)
