@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, url_for, send_from_directory
 import os
 from PIL import Image
-from dither import floyd_steinberg_dither
+from dither import floydDither
 import json
 import uuid
 
@@ -25,7 +25,8 @@ def upload_image():
     for file in files:
         if file and allowed_file(file.filename):
             image = Image.open(file)
-            dithered_image = floyd_steinberg_dither(image)
+            dithered_image = floydDither(image)
+            dithered_image = Image.fromarray(dithered_image)
         file_name, file_ext = os.path.splitext(file.filename)
         file_name += "_" + str(uuid.uuid1())
         dithered_image.save(os.path.join(
