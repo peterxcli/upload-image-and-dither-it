@@ -1,30 +1,50 @@
 from math import *
 import numpy as np
 
+#二值化 [0, 255]
 def apply_threshold(value):
     return 255 * floor(value/128)
 
+def findClosestColour(pixel):
+    # 定義顏色庫，此例中為黃色、紅色、白色、黑色
+    colors = np.array([[255, 255, 0], [255, 0, 0], [255, 255, 255], [0, 0, 0]])
+    
+    # 計算每個顏色與輸入像素的距離
+    distances = np.sum(np.abs(pixel[:, np.newaxis].T - colors), axis=1)
+    
+    # 取距離最短的顏色
+    shortest = np.argmin(distances)
+    closest_color = colors[shortest]
+    
+    # 回傳最接近的顏色
+    return closest_color
+
 def floyd_steinberg_dither(image_file):
         new_img = image_file
+        # 轉換圖片格式為RGB
         new_img = new_img.convert('RGB')
         pixel = new_img.load()
 
         x_lim, y_lim = new_img.size
 
+        # 遍歷圖片中的每個像素
         for y in range(1, y_lim):
             for x in range(1, x_lim):
                 red_oldpixel, green_oldpixel, blue_oldpixel = pixel[x, y]
 
+                # 計算新的像素值
                 red_newpixel = apply_threshold(red_oldpixel)
                 green_newpixel = apply_threshold(green_oldpixel)
                 blue_newpixel = apply_threshold(blue_oldpixel)
 
                 pixel[x, y] = red_newpixel, green_newpixel, blue_newpixel
 
+                # 計算舊值與新值之間的誤差
                 red_error = red_oldpixel - red_newpixel
                 blue_error = blue_oldpixel - blue_newpixel
                 green_error = green_oldpixel - green_newpixel
 
+                # 計算並更新周圍像素的誤差值
                 if (x < x_lim - 1):
                     red = pixel[x+1, y][0] + round(red_error * 7/16)
                     green = pixel[x+1, y][1] + round(green_error * 7/16)
