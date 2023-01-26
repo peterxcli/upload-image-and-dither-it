@@ -33,8 +33,9 @@ def upload_image():
         file_name, file_ext = os.path.splitext(file.filename)
         # 加入一個隨機的 UUID
         file_name += "_" + str(uuid.uuid1())
-        dithered_image.save(os.path.join(
-            'static/upload', 'dithered_' + file_name + ".bmp"), format="bmp")
+        # 儲存圖片
+        dithered_image.save(os.path.join('static/upload', 'dithered_' + file_name + ".bmp"), format="bmp")
+        # 為圖片建立 url
         image_urls.append(url_for('image_file', filename='dithered_' + file_name + ".bmp"))
     # 回傳所有圖片的URL，200 OK，並設定Content-Type為application/json
     return json.dumps(image_urls), 200, {'ContentType':'application/json'}
