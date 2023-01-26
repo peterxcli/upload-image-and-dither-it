@@ -36,8 +36,8 @@ def floyd_steinberg_dither(image_file):
                 red_newpixel = apply_threshold(red_oldpixel)
                 green_newpixel = apply_threshold(green_oldpixel)
                 blue_newpixel = apply_threshold(blue_oldpixel)
-
-                pixel[x, y] = red_newpixel, green_newpixel, blue_newpixel
+                closest_colour = findClosestColour(np.array([red_newpixel, green_newpixel, blue_newpixel]))
+                pixel[x, y] = tuple(closest_colour)
 
                 # 計算舊值與新值之間的誤差
                 red_error = red_oldpixel - red_newpixel
@@ -74,25 +74,3 @@ def floyd_steinberg_dither(image_file):
                     pixel[x+1, y+1] = (red, green, blue)
 
         return new_img
-
-def findClosestColour(pixel):
-    colors = np.array([[255, 255, 0], [255, 0, 0], [255, 255, 255], [0, 0, 0]])
-    distances = np.sum(np.abs(pixel[:, np.newaxis].T - colors), axis=1)
-    shortest = np.argmin(distances)
-    closest_color = colors[shortest]
-    return closest_color
-
-def floydDither(img_array):
-    img_array = np.array(img_array)
-    height, width, _ = img_array.shape
-    for y in range(0, height-1):
-        for x in range(1, width-1):
-            old_pixel = img_array[y, x, :]
-            new_pixel = findClosestColour(old_pixel)
-            img_array[y, x, :] = new_pixel
-            quant_error = new_pixel - old_pixel
-            img_array[y, x+1, :] =  img_array[y, x+1, :] + quant_error * 7/16
-            img_array[y+1, x-1, :] =  img_array[y+1, x-1, :] + quant_error * 3/16
-            img_array[y+1, x, :] =  img_array[y+1, x, :] + quant_error * 5/16
-            img_array[y+1, x+1, :] =  img_array[y+1, x+1, :] + quant_error * 1/16
-    return img_array

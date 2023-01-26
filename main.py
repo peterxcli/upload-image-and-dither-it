@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, url_for, send_from_directory
 import os
 from PIL import Image
-from dither import floydDither
+from dither import floyd_steinberg_dither
 import json
 import uuid
 
@@ -29,19 +29,12 @@ def upload_image():
         if file and allowed_file(file.filename):
             # 從檔案中開啟圖片
             image = Image.open(file)
-            # 對圖片進行Floyd-Steinberg演算法的抖動
-            dithered_image = floydDither(image)
-            # 從 numpy array 轉回 PIL image
-            dithered_image = Image.fromarray(dithered_image)
-        # 將原始檔案名稱和副檔名分開
+            dithered_image = floyd_steinberg_dither(image)
         file_name, file_ext = os.path.splitext(file.filename)
         # 加入一個隨機的 UUID
         file_name += "_" + str(uuid.uuid1())
-        # 儲存圖片
-        dithered_image.save(os.path.join('static/upload', 'dithered_' + file_name + ".bmp"), format="bmp")
-        # 將圖片複製到 images list 中
-        images.append(dithered_image.copy())
-        # 為圖片建立 url
+        dithered_image.save(os.path.join(
+            'static/upload', 'dithered_' + file_name + ".bmp"), format="bmp")
         image_urls.append(url_for('image_file', filename='dithered_' + file_name + ".bmp"))
     # 回傳所有圖片的URL，200 OK，並設定Content-Type為application/json
     return json.dumps(image_urls), 200, {'ContentType':'application/json'}
